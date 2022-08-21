@@ -10,6 +10,21 @@
 -   Firebase
 -   GraphQL
 
+## Overview
+
+Basic ECommerce clothes shopping app. It has the functionality to browse between different categories of items and you can select and add items to the cart. Paying for items will be implemented soon
+
+## Technologies
+
+-   React
+-   Firebase
+-   Redux
+-   Redux-saga
+-   Redux-persist
+-   Reselect
+-   SASS
+-   Styled Components
+
 ## Usage
 
 Clone it!
