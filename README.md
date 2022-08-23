@@ -22,7 +22,7 @@ Basic ECommerce clothes shopping app. It has the functionality to browse between
 -   Redux-saga
 -   Redux-persist
 -   Reselect
--   SASS
+-   Sass
 -   Styled Components
 
 ## Usage
