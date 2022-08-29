@@ -1,5 +1,9 @@
-import { async } from '@firebase/util';
+import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useSelector } from 'react-redux';
+
+import { selectCartTotal } from '../../store/cart/cart.selector';
+import { selectCurrentUser } from '../../store/user/user.selector';
 
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import { FormContainer, PaymentFormContainer } from './payment-form.styles';
@@ -7,12 +11,18 @@ import { FormContainer, PaymentFormContainer } from './payment-form.styles';
 const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
+    const amount = useSelector(selectCartTotal);
+    const currentUser = useSelector(selectCurrentUser);
+    const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
     const paymentHandler = async (e) => {
         e.preventDefault();
 
         // if there's no stripe or element instance then exit function
         if (!stripe || !elements) return;
+
+        // set processing payment to true to disable pay now button
+        setIsProcessingPayment(true);
 
         // create a stripe payment intent which lets stripe know that a payment is about to occur
         const response = await fetch(
@@ -22,20 +32,23 @@ const PaymentForm = () => {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({ amount: 10000 })
+                body: JSON.stringify({ amount: amount * 100 })
             }
         ).then((res) => res.json());
 
         const client_secret = response.paymentIntent.client_secret;
 
+        // Payment Call Api
         const paymentResult = await stripe.confirmCardPayment(client_secret, {
             payment_method: {
                 card: elements.getElement(CardElement),
                 billing_details: {
-                    name: 'Current User'
+                    name: currentUser ? currentUser.displayName : 'Guest'
                 }
             }
         });
+
+        setIsProcessingPayment(false);
 
         if (paymentResult.error) {
             alert(paymentResult.error);
@@ -51,7 +64,10 @@ const PaymentForm = () => {
             <FormContainer onSubmit={paymentHandler}>
                 <h2>Credit Card Payment: </h2>
                 <CardElement />
-                <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+                <Button
+                    buttonType={BUTTON_TYPE_CLASSES.inverted}
+                    disabled={isProcessingPayment}
+                >
                     Pay now
                 </Button>
             </FormContainer>
