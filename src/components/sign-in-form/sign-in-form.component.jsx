@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
@@ -9,12 +10,15 @@ import {
     googleSignInStart,
     emailSignInStart
 } from '../../store/user/user.action';
+import { selectCurrentUser } from '../../store/user/user.selector';
 
 const defaultFormFields = {
     email: '',
     password: ''
 };
 const SignInForm = () => {
+    const currentUser = useSelector(selectCurrentUser);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
