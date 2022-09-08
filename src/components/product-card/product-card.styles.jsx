@@ -13,6 +13,7 @@ export const ProductCartContainer = styled.div`
         height: 95%;
         object-fit: cover;
         margin-bottom: 5px;
+        border-radius: 5px;
     }
 
     button {

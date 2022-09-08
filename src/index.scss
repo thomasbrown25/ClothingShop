@@ -4,6 +4,14 @@ body {
     font-family: 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    height: 100vh;
+    background: linear-gradient(
+            to bottom,
+            rgb(201, 200, 204),
+            rgba(0, 0, 0, 0.8)
+        ),
+        url(./assets/bg-image.jpg);
+    background-size: cover;
 }
 
 code {
