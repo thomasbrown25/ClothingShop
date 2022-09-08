@@ -31,7 +31,11 @@ const CheckoutItem = ({ cartItem }) => {
     return (
         <CheckoutItemContainer>
             <ImageContainer>
-                <img src={imageUrl} alt={`${name}`} />
+                <img
+                    src={imageUrl}
+                    alt={`${name}`}
+                    style={{ borderRadius: '5px', border: '1px solid black' }}
+                />
             </ImageContainer>
             <BaseSpan> {name} </BaseSpan>
             <Quantity>

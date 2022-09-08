@@ -14,6 +14,7 @@ export const ProductCartContainer = styled.div`
         object-fit: cover;
         margin-bottom: 5px;
         border-radius: 5px;
+        border: 1px solid black;
     }
 
     button {
